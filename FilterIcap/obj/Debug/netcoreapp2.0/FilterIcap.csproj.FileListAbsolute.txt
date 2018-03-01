@@ -1,0 +1,11 @@
+/Users/kent/git/FilterIcap/FilterIcap/bin/Debug/netcoreapp2.0/FilterIcap.deps.json
+/Users/kent/git/FilterIcap/FilterIcap/bin/Debug/netcoreapp2.0/FilterIcap.runtimeconfig.json
+/Users/kent/git/FilterIcap/FilterIcap/bin/Debug/netcoreapp2.0/FilterIcap.runtimeconfig.dev.json
+/Users/kent/git/FilterIcap/FilterIcap/bin/Debug/netcoreapp2.0/FilterIcap.dll
+/Users/kent/git/FilterIcap/FilterIcap/bin/Debug/netcoreapp2.0/FilterIcap.pdb
+/Users/kent/git/FilterIcap/FilterIcap/obj/Debug/netcoreapp2.0/FilterIcap.csprojResolveAssemblyReference.cache
+/Users/kent/git/FilterIcap/FilterIcap/obj/Debug/netcoreapp2.0/FilterIcap.csproj.CoreCompileInputs.cache
+/Users/kent/git/FilterIcap/FilterIcap/obj/Debug/netcoreapp2.0/FilterIcap.AssemblyInfoInputs.cache
+/Users/kent/git/FilterIcap/FilterIcap/obj/Debug/netcoreapp2.0/FilterIcap.AssemblyInfo.cs
+/Users/kent/git/FilterIcap/FilterIcap/obj/Debug/netcoreapp2.0/FilterIcap.dll
+/Users/kent/git/FilterIcap/FilterIcap/obj/Debug/netcoreapp2.0/FilterIcap.pdb

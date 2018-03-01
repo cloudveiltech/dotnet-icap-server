@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{85C59AD8-BB34-460F-A575-FECE4E122C96}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FilterIcap/Net/IcapMethod.cs">
+    <Files>
+      <File FileName="FilterIcap/Program.cs" Line="105" Column="25" />
+      <File FileName="FilterIcap/Net/IcapRequestMessage.cs" Line="83" Column="25" />
+      <File FileName="FilterIcap/Net/Exceptions/IcapException.cs" Line="6" Column="61" />
+      <File FileName="FilterIcap/Net/Exceptions/MalformedRequestException.cs" Line="14" Column="120" />
+      <File FileName="FilterIcap/Net/IcapMethod.cs" Line="5" Column="6" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.FilterIcap PreferredExecutionTarget="MonoDevelop.Default" />
+  <MultiItemStartupConfigurations />
+</Properties>
