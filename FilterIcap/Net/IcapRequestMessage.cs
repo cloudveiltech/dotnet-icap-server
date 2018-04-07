@@ -49,7 +49,7 @@ namespace FilterIcap.Net
         /// <value>The request body.</value>
         public string RequestBody { get; set; }
 
-        public List<Encapsulation> Encapsulations { get; set; }
+        public List<Encapsulation> Encapsulations { get; set; } = new List<Encapsulation>();
 
         public IcapRequestMessage()
         {

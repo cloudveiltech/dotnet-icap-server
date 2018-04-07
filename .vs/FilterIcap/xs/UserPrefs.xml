@@ -1,31 +1,21 @@
-﻿<Properties StartupConfiguration="{85C59AD8-BB34-460F-A575-FECE4E122C96}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="FilterIcap/Net/Messages/Parsing/StreamParser.cs">
+﻿<Properties StartupConfiguration="{EA679F97-D551-466E-A39B-E8379BF05634}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="FilterIcapTestApp/Program.cs">
     <Files>
+      <File FileName="FilterIcapTestApp/Program.cs" Line="21" Column="10" />
+      <File FileName="FilterIcapTests/UnitTest1.cs" Line="23" Column="31" />
+      <File FileName="FilterIcapTestApp/Resources/test-reqmod-req-body.txt" Line="4" Column="1" />
+      <File FileName="FilterIcap/Net/Messages/Parsing/StreamParser.cs" Line="56" Column="1" />
       <File FileName="FilterIcap/Program.cs" Line="65" Column="63" />
-      <File FileName="FilterIcap/Net/IcapRequestMessage.cs" Line="56" Column="10" />
-      <File FileName="FilterIcap/Net/Exceptions/IcapException.cs" Line="19" Column="13" />
-      <File FileName="FilterIcap/Net/Exceptions/MalformedRequestException.cs" Line="2" Column="19" />
-      <File FileName="FilterIcap/Net/IcapServer.cs" Line="189" Column="30" />
-      <File FileName="FilterIcap/Net/WsaErrorCode.cs" Line="6" Column="31" />
-      <File FileName="FilterIcap/Net/IcapClient.cs" Line="24" Column="1" />
-      <File FileName="FilterIcap/Net/IcapResponseMessage.cs" Line="40" Column="56" />
-      <File FileName="FilterIcap/Net/IcapStatusCodeStrings.cs" Line="24" Column="39" />
-      <File FileName="FilterIcap/Net/IcapUri.cs" Line="10" Column="68" />
-      <File FileName="FilterIcap/Net/IcapServerConfiguration.cs" Line="15" Column="25" />
-      <File FileName="FilterIcap/Net/EncapsulationType.cs" Line="19" Column="19" />
-      <File FileName="FilterIcap/Net/Encapsulation.cs" Line="19" Column="63" />
-      <File FileName="FilterIcap/Net/Messages/Parsing/StreamParser.cs" Line="230" Column="33" />
-      <File FileName="FilterIcap/Net/Messages/Parsing/IStreamParser.cs" Line="24" Column="9" />
-      <File FileName="FilterIcap/Net/Messages/Parsing/IcapParsingState.cs" Line="32" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/kent/git/FilterIcap/FilterIcap/Net/IcapServer.cs" relfile="FilterIcap/Net/IcapServer.cs" line="94" column="1" />
+      <Breakpoint file="/Users/kent/git/FilterIcap/FilterIcap/Net/IcapServer.cs" relfile="FilterIcap/Net/IcapServer.cs" line="95" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.FilterIcap PreferredExecutionTarget="MonoDevelop.Default" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.FilterIcapTestApp PreferredExecutionTarget="MonoDevelop.Default" />
 </Properties>

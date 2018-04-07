@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FilterIcap\FilterIcap.csproj" />
+    <ProjectReference Include="..\FilterIcapTests\FilterIcapTests.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\test-reqmod-no-body.txt" />
+    <None Remove="Resources\test-reqmod-req-body.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\test-reqmod-no-body.txt" />
+    <EmbeddedResource Include="Resources\test-reqmod-req-body.txt" />
+  </ItemGroup>
+</Project>

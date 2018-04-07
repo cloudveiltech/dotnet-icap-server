@@ -26,6 +26,9 @@ namespace FilterIcap.Net.Messages.Parsing
 
         static StreamParser()
         {
+            encapsulationTypes = new Dictionary<string, EncapsulationType>();
+            validMethods = new List<string>();
+
             encapsulationTypes.Add("req-hdr", EncapsulationType.RequestHeader);
             encapsulationTypes.Add("req-body", EncapsulationType.RequestBody);
             encapsulationTypes.Add("res-hdr", EncapsulationType.ResponseHeader);
@@ -173,6 +176,10 @@ namespace FilterIcap.Net.Messages.Parsing
                                     {
                                         string[] keyValue = headerInfoParts[i].Split('=');
 
+                                        // Clear out whitespace on 'req-hdr' part.
+                                        keyValue[0] = keyValue[0].Trim();
+                                        keyValue[1] = keyValue[1].Trim(); // Just for future safety
+
                                         int byteStart;
                                         if (!int.TryParse(keyValue[1], out byteStart))
                                         {
@@ -204,7 +211,7 @@ namespace FilterIcap.Net.Messages.Parsing
                                         start = byteStarts[i].Item2;
                                         end = (i + 1 < byteStarts.Count) ? byteStarts[i + 1].Item2 - 1 : -1;
 
-                                        encapsulatedByteIndexes.Add(byteStarts[0].Item1, new EncapsulationRange(start, end));
+                                        encapsulatedByteIndexes.Add(byteStarts[i].Item1, new EncapsulationRange(start, end));
                                     }
 
                                     icapParsingState = IcapParsingState.EncapsulatedCollect;
@@ -281,107 +288,7 @@ namespace FilterIcap.Net.Messages.Parsing
 
         public event RequestLineDelegate OnRequestLine;
 
-        /// <summary>
-        /// Takes a raw request string and parses it out into its different fields.
-        /// </summary>
-        /// <returns>The IcapRequestMessage which represents the messageString</returns>
-        /// <param name="messageString">The request message, ASCII-encoded.</param>
-        /// <exception cref="FilterIcap.Net.Exceptions.MalformedRequestException">Occurs when we detect a malformed request.</exception>
-        public static IcapRequestMessage Parse(string messageString)
-        {
-            IcapRequestMessage message = new IcapRequestMessage();
-
-            IcapParsingState icapParsingState = IcapParsingState.Unknown;
-            bool hasRequestLine = false;
-
-            // This is a body builder. Unfortunately, this one doesn't go to the gym.
-            StringBuilder bodyBuilder = new StringBuilder();
-
-            string currentHeaderName = null;
-            StringBuilder currentHeaderValue = new StringBuilder();
-
-            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(messageString)))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string line = reader.ReadLine();
-
-
-
-                while ((line = reader.ReadLine()) != null)
-                {
-                    switch (icapParsingState)
-                    {
-                        case IcapParsingState.HeaderCollect:
-                            // if line == "" shouldn't be in this state, because it will only happen on Encapsulated:
-
-                            if (line == "")
-                            {
-                                icapParsingState = IcapParsingState.BodyCollect;
-
-                                // Clean up last header and add it before going into body parsing mode.
-                                if (currentHeaderName != null)
-                                {
-                                    message.Headers[currentHeaderName] = currentHeaderValue.ToString().Trim();
-                                    currentHeaderValue.Clear();
-                                    currentHeaderName = null;
-                                }
-
-                                break;
-                            }
-
-                            if (line.Length > 0 && char.IsWhiteSpace(line[0]))
-                            {
-                                // This is a continuation of a previous line's header value.
-                                currentHeaderValue.Append(line);
-                            }
-                            else
-                            {
-                                if (currentHeaderName != null)
-                                {
-                                    message.Headers[currentHeaderName] = currentHeaderValue.ToString().Trim();
-                                    currentHeaderValue.Clear();
-                                    currentHeaderName = null;
-                                }
-
-                                if (line.IndexOf(':') < 0)
-                                {
-                                    throw new MalformedRequestException($"Expected header name. Got '{line}' instead.", messageString);
-                                }
-
-                                string[] headerParts = line.Split(':');
-                                currentHeaderName = headerParts[0];
-
-                                // Loop through header parts just in case there is more than one ':' character in the line.
-                                // I don't believe RFC2822 prohibits that.
-                                for (int j = 1; j < headerParts.Length; j++)
-                                {
-                                    currentHeaderValue.Append(headerParts[j]);
-
-                                    if (j < headerParts.Length - 1)
-                                    {
-                                        currentHeaderValue.Append(':');
-                                    }
-                                }
-
-                                if (currentHeaderName.Equals("Encapsulated", StringComparison.OrdinalIgnoreCase))
-                                {
-                                    string headerInfo = currentHeaderValue.ToString();
-                                    string[] headerInfoParts = headerInfo.Split(',');
-
-                                }
-                            }
-
-                            break;
-                            // how are we going to implement chunked encoding with "streaming?"
-                    }
-                }
-            }
-
-            message.RequestBody = bodyBuilder.ToString();
-            return message;
-        }
-
-        private static bool isValidMethod(string method)
+        static bool isValidMethod(string method)
         {
             for (int i = 0; i < validMethods.Count; i++)
             {
