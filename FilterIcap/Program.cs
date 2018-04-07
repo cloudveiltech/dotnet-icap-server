@@ -8,9 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using FilterIcap.Net;
 
 namespace FilterIcap
 {
@@ -34,85 +36,49 @@ namespace FilterIcap
 
     class Program
     {
-        static Socket clientSocket;
-
         static void Main(string[] args)
         {
-            Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            var endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1344);
-            socket.Bind(endPoint);
-            socket.Listen(512);
+            IcapServer.ISTag = "_cloudveil_icap_0.1";
 
-            while(true) {
-                Socket client = socket.Accept();
-                if(client != null) {
-                    Console.WriteLine("Client accepted.");
-                    clientSocket = client;
+            IcapServerConfiguration config = new IcapServerConfiguration(AddressFamily.InterNetwork, "127.0.0.1", 1344);
 
-                    break;
-                }
-            }
+            config.SupportedMessageTypes.Add("REQMOD");
 
-            Thread icap = new Thread(IcapThread);
-            icap.Start(clientSocket);
+            // Only do redirects on requests of known bad sites.
+            //config.SupportedMessageTypes.Add("RESPMOD");
+            config.Service = "CloudVeil Technology dotnet-icap-server";
+
+            IcapServer server = new IcapServer(config);
+            server.Init();
+            server.StartListening(512);
+
+            server.OnRequestMessage += OnRequestMessage;
 
             while(true) {
                 Thread.Sleep(50);
             }
         }
 
-        const int BufferSize = 1024;
+        // TODO: The server needs to handle the options request.
+        // TODO: We need a server configuration class.
 
-        static void IcapThread(object socketObj) {
-            Socket icapSocket = socketObj as Socket;
+        static void OnRequestMessage(IcapClient client, IcapRequestMessage request)
+        {
+            IcapResponseMessage response = null;
 
-            IcapState state = IcapState.CollectingData;
+            switch(request.Method) {
+                case "REQMOD":
+                    
+                    // TODO: Build a reqmod that blocks youtube.
+                    // TODO: Also after lunch, start thinking about how to integrate this with Filter-Windows.
+                    break;
 
-            byte[] receiveBuffer;
-            List<ByteArrayInfo> buffers = new List<ByteArrayInfo>();
+                case "RESPMOD":
+                    break;
+            }
 
-            byte[] dataBuffer = null;
-            int recvBytes = 0, totalReceived = 0;
-
-            while(true) {
-                switch (state)
-                {
-                    case IcapState.CollectingData:
-                        receiveBuffer = new byte[BufferSize];
-                        recvBytes = icapSocket.Receive(receiveBuffer);
-                        buffers.Add(new ByteArrayInfo(receiveBuffer, recvBytes));
-
-                        if (recvBytes < BufferSize)
-                        {
-                            totalReceived += recvBytes;
-
-                            dataBuffer = new byte[totalReceived];
-                            int itr = 0;
-                            foreach (var buf in buffers)
-                            {
-                                new ArraySegment<byte>(buf.ByteArray, 0, buf.DataLength).CopyTo(dataBuffer, itr);
-
-                                itr += buf.DataLength;
-                            }
-                            state = IcapState.ParsingData;
-
-                            recvBytes = 0;
-                            totalReceived = 0;
-                            break;
-                        }
-                        else if (recvBytes == BufferSize)
-                        {
-                            totalReceived += BufferSize;
-                        }
-
-                        break;
-
-                    case IcapState.ParsingData:
-                        string message = Encoding.ASCII.GetString(dataBuffer);
-
-                        Console.WriteLine(message);
-                        break;
-                }
+            if(response != null) {
+                client.Send(response);
             }
         }
     }

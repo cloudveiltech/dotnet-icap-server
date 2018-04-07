@@ -8,5 +8,10 @@
   <ItemGroup>
     <Folder Include="Net\" />
     <Folder Include="Net\Exceptions\" />
+    <Folder Include="Net\Messages\" />
+    <Folder Include="Net\Messages\Parsing\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Net\IcapMethod.cs" />
   </ItemGroup>
 </Project>

@@ -13,5 +13,10 @@ namespace FilterIcap.Net.Exceptions
         public IcapException(string message) : base(message)
         {
         }
+
+        public IcapException(string message, Exception inner) : base(message, inner)
+        {
+            
+        }
     }
 }
